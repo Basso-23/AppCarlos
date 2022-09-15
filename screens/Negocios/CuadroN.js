@@ -27,6 +27,30 @@ import Header from '../Inicio/HeaderBlack';
 function CuadroN() {
   const [posts, setPosts] = useState([]);
 
+  const [state, setState] = useState({
+    banner: 'Abierto',
+  });
+
+  useEffect(() => {
+    let prueba = readTEXTfile();
+    prueba
+      .then((value) => {
+        //state.language = value;
+        if (value == 'chino') {
+          setState({
+            ...state,
+            banner: '打开',
+          });
+        }
+        console.log('leido en nini restaurante: ' + state.banner);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log('leido FUERA en mini restauranter: ' + state.banner);
+  }, []);
+
   let prueba = readTEXTfile();
 
   useEffect(() => {
@@ -78,10 +102,7 @@ function CuadroN() {
                           alignSelf: 'baseline',
                           height: 20,
                         }}>
-                        <Text style={styles.imageText}>
-                          {' '}
-                          {section.content[0].estado}{' '}
-                        </Text>
+                        <Text style={styles.imageText}> {state.banner} </Text>
                       </View>
 
                       <View style={styles.childView}>
@@ -185,10 +206,7 @@ function CuadroN() {
                           alignSelf: 'baseline',
                           height: 20,
                         }}>
-                        <Text style={styles.imageText}>
-                          {' '}
-                          {section.content[0].estado}{' '}
-                        </Text>
+                        <Text style={styles.imageText}> {state.banner} </Text>
                       </View>
 
                       <View style={styles.childView}>

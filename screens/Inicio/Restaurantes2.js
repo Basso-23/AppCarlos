@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Text,
   View,
@@ -9,22 +9,61 @@ import {
   ImageBackground,
   Linking,
   Button,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import axios from "axios";
-import { Dimensions } from "react-native";
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import axios from 'axios';
+import { Dimensions } from 'react-native';
 import {
   addMultipleGifs,
   deleteAllGifs,
   getSingleGif,
   saveTEXTfile,
   readTEXTfile,
-} from "../TextFile";
+} from '../TextFile';
 
 function Restaurantes2() {
   const [posts, setPosts] = useState([]);
+
+  const [state, setState] = useState({
+    banner: 'Abierto',
+    url: null,
+    area1: 'Barrio Chino',
+    area2: 'Kosher Alley',
+    area3: 'Green Site',
+    ver: 'Ver+',
+    inicio: 'Inicio',
+    negocios: 'Negocios',
+    web: 'Web',
+  });
+
+  useEffect(() => {
+    let prueba = readTEXTfile();
+    prueba
+      .then((value) => {
+        //state.language = value;
+        if (value == 'chino') {
+          setState({
+            ...state,
+            banner: '打开',
+            area1: '唐人街',
+            area2: '唐人街',
+            area3: '唐人街',
+            ver: '看 +',
+            inicio: '家',
+            negocios: '餐馆',
+            web: '网络',
+          });
+        }
+        console.log('leido en nini restaurante: ' + state.banner);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log('leido FUERA en mini restauranter: ' + state.banner);
+  }, []);
 
   let prueba = readTEXTfile();
 
@@ -34,7 +73,7 @@ function Restaurantes2() {
         language = value;
         axios
           .get(
-            "https://bmacademiaonline.com/payaproyecto3/restaurantes.php?lang=" +
+            'https://bmacademiaonline.com/payaproyecto3/restaurantes.php?lang=' +
               language
           )
           .then((res) => {
@@ -42,7 +81,7 @@ function Restaurantes2() {
           });
       })
       .catch((err) => {
-        setPosts("ERROR");
+        setPosts('ERROR');
       });
   }, []);
 
@@ -51,9 +90,9 @@ function Restaurantes2() {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.tituloText}>Kosher Alley</Text>
+        <Text style={styles.tituloText}>{state.area2}</Text>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Ver+</Text>
+          <Text style={styles.buttonText}>{state.ver}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.imagenesContainer}>
@@ -62,45 +101,28 @@ function Restaurantes2() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ flexGrow: 1 }}
           snapToAlignment="center"
-          decelerationRate="fast"
-        >
+          decelerationRate="fast">
           {posts.map((section) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Negocios", {
-                  screen: "Restaurante",
-                  params: {
-                    name: section.content[0].name,
-                    image: section.content[0].image,
-                    mini: section.content[0].mini,
-                    description: section.content[0].description,
-                    id: section.content[0].id,
-                    coordinates: section.content[0].coordinates,
-                  },
-                })
-              }
-            >
+                navigation.navigate(state.web, { url: section.content[0].url })
+              }>
               <ImageBackground
                 imageStyle={{ borderRadius: 6 }}
                 source={{ uri: section.content[0].image }}
-                style={styles.imagenes}
-              >
+                style={styles.imagenes}>
                 <View style={styles.child}>
                   <View style={styles.childView}>
                     <View
                       style={{
                         marginTop: 5,
                         marginLeft: 10,
-                        backgroundColor: "black",
+                        backgroundColor: 'black',
                         borderRadius: 10,
-                        alignSelf: "baseline",
+                        alignSelf: 'baseline',
                         height: 20,
-                      }}
-                    >
-                      <Text style={styles.imageText}>
-                        {" "}
-                        {section.content[0].estado}{" "}
-                      </Text>
+                      }}>
+                      <Text style={styles.imageText}> {state.banner} </Text>
                     </View>
 
                     <View
@@ -108,12 +130,11 @@ function Restaurantes2() {
                         marginTop: 5,
                         marginRight: 10,
                         borderRadius: 4,
-                        alignSelf: "baseline",
-                      }}
-                    >
+                        alignSelf: 'baseline',
+                      }}>
                       <Image
                         style={{ width: 26, height: 26 }}
-                        source={require("./check1.png")}
+                        source={require('./check1.png')}
                       />
                     </View>
                   </View>
@@ -126,7 +147,7 @@ function Restaurantes2() {
                           marginLeft: 10,
                           width: 30,
                           height: 30,
-                          resizeMode: "stretch",
+                          resizeMode: 'stretch',
                           paddingLeft: 0,
                         }}
                         source={{ uri: section.content[0].mini }}
@@ -136,12 +157,11 @@ function Restaurantes2() {
                           marginTop: 5,
                           marginLeft: 10,
                           borderRadius: 4,
-                          alignSelf: "baseline",
-                        }}
-                      >
+                          alignSelf: 'baseline',
+                        }}>
                         <Text style={styles.nameText}>
-                          {" "}
-                          {section.content[0].name}{" "}
+                          {' '}
+                          {section.content[0].name}{' '}
                         </Text>
                       </View>
                     </View>
@@ -152,10 +172,10 @@ function Restaurantes2() {
                         marginRight: 10,
                         width: 25,
                         height: 25,
-                        resizeMode: "stretch",
+                        resizeMode: 'stretch',
                         paddingLeft: 0,
                       }}
-                      source={require("./star-rank.png")}
+                      source={require('./star-rank.png')}
                     />
                   </View>
                 </View>
@@ -168,7 +188,7 @@ function Restaurantes2() {
   );
 }
 
-let dimensions = Dimensions.get("window").width;
+let dimensions = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     marginTop: 12,
@@ -178,22 +198,22 @@ const styles = StyleSheet.create({
   imagenes: {
     height: 115,
     flex: 1,
-    flexDirection: "column",
+    flexDirection: 'column',
     width: 200,
-    justifyContent: "center",
-    resizeMode: "stretch",
+    justifyContent: 'center',
+    resizeMode: 'stretch',
     marginLeft: 5,
     marginRight: 5,
   },
 
   imageText: {
     fontSize: 12,
-    color: "#fedc00",
+    color: '#fedc00',
   },
 
   nameText: {
     fontSize: 12,
-    color: "white",
+    color: 'white',
   },
 
   child: {
@@ -201,64 +221,65 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: 200,
     height: 115,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 
   childView: {
     flex: 1,
-    justifyContent: "space-between",
-    flexDirection: "row",
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
 
   childView2: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     marginTop: 25,
 
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
   childView3: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     marginBottom: 18,
-    flexDirection: "column",
+    flexDirection: 'column',
   },
 
   imagenesContainer: {
     marginLeft: 0,
-    flexDirection: "row",
+    flexDirection: 'row',
     width: dimensions,
   },
 
   tituloText: {
     fontSize: 25,
-    fontWeight: "bold",
-    fontFamily: "arial",
+    fontWeight: 'bold',
+    fontFamily: 'arial',
     marginBottom: 15,
-    color: "#252a3e",
+    color: '#252a3e',
   },
 
   textContainer: {
     marginLeft: 12,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
   button: {
-    backgroundColor: "black",
+    backgroundColor: 'black',
     height: 30,
     width: 100,
     borderRadius: 5,
-    alignContent: "center",
-    justifyContent: "center",
-    marginLeft: dimensions - 265,
+    alignContent: 'center',
+    justifyContent: 'center',
+    left: '75%',
   },
 
   buttonText: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginLeft: 35,
     fontSize: 14,
-    color: "white",
+    color: 'white',
+    width: dimensions,
   },
 });
 

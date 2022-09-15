@@ -26,14 +26,39 @@ import {
 function Promos() {
   const [posts, setPosts] = useState([]);
 
-
-  let prueba = readTEXTfile();
+  const [state, setState] = useState({
+    web: 'Web',
+  });
 
   useEffect(() => {
-        prueba.then((value) => {
+    let prueba = readTEXTfile();
+    prueba
+      .then((value) => {
+        //state.language = value;
+        if (value == 'chino') {
+          setState({
+            ...state,
+            web: '网络',
+          });
+        }
+        console.log('leido en nini restaurante: ' + state.banner);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log('leido FUERA en mini restauranter: ' + state.banner);
+  }, []);
+
+  useEffect(() => {
+    prueba
+      .then((value) => {
         language = value;
         axios
-          .get('https://bmacademiaonline.com/payaproyecto3/promos.php?lang=' +language)
+          .get(
+            'https://bmacademiaonline.com/payaproyecto3/promos.php?lang=' +
+              language
+          )
           .then((res) => {
             setPosts(res.data);
           });
@@ -42,6 +67,7 @@ function Promos() {
         setPosts('ERROR');
       });
   }, []);
+  let prueba = readTEXTfile();
 
   const navigation = useNavigation();
 
@@ -72,7 +98,7 @@ function Promos() {
         {posts.map((section) => (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('Web', { url: section.content[0].url })
+              navigation.navigate(state.web, { url: section.content[0].url })
             }>
             <Image
               style={styles.imagenes}

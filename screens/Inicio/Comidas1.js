@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Text,
   View,
@@ -9,24 +9,46 @@ import {
   ImageBackground,
   Linking,
   Button,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { Dimensions } from "react-native";
-import axios from "axios";
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { Dimensions } from 'react-native';
+import axios from 'axios';
 import {
   addMultipleGifs,
   deleteAllGifs,
   getSingleGif,
   saveTEXTfile,
   readTEXTfile,
-} from "../TextFile";
+} from '../TextFile';
 
 function Comidas1() {
   const [posts, setPosts] = useState([]);
 
-  let prueba = readTEXTfile();
+  const [state, setState] = useState({
+    web: 'Web',
+  });
+
+  useEffect(() => {
+    let prueba = readTEXTfile();
+    prueba
+      .then((value) => {
+        //state.language = value;
+        if (value == 'chino') {
+          setState({
+            ...state,
+            web: '网络',
+          });
+        }
+        console.log('leido en nini restaurante: ' + state.banner);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log('leido FUERA en mini restauranter: ' + state.banner);
+  }, []);
 
   useEffect(() => {
     prueba
@@ -34,7 +56,7 @@ function Comidas1() {
         language = value;
         axios
           .get(
-            "https://bmacademiaonline.com/payaproyecto3/comidas.php?lang=" +
+            'https://bmacademiaonline.com/payaproyecto3/comidas.php?lang=' +
               language
           )
           .then((res) => {
@@ -42,9 +64,10 @@ function Comidas1() {
           });
       })
       .catch((err) => {
-        setPosts("ERROR");
+        setPosts('ERROR');
       });
   }, []);
+  let prueba = readTEXTfile();
 
   const navigation = useNavigation();
 
@@ -71,23 +94,20 @@ function Comidas1() {
         contentContainerStyle={{ flexGrow: 1 }}
         snapToAlignment="center"
         decelerationRate="fast"
-        ref={scrollViewRef}
-      >
+        ref={scrollViewRef}>
         {posts.map((section) => (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("Web", { url: section.content[0].url })
-            }
-          >
+              navigation.navigate(state.web, { url: section.content[0].url })
+            }>
             <ImageBackground
               imageStyle={{ borderRadius: 12 }}
               style={styles.imagenes}
-              source={{ uri: section.content[0].image }}
-            >
+              source={{ uri: section.content[0].image }}>
               <View style={styles.textView}>
                 <Text style={styles.imageText}>
-                  {" "}
-                  {section.content[0].name}{" "}
+                  {' '}
+                  {section.content[0].name}{' '}
                 </Text>
               </View>
             </ImageBackground>
@@ -98,7 +118,7 @@ function Comidas1() {
   );
 }
 
-let dimensions = Dimensions.get("window").width;
+let dimensions = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     marginLeft: 5,
@@ -116,15 +136,15 @@ const styles = StyleSheet.create({
 
   imageText: {
     fontSize: 15,
-    color: "white",
-    fontWeight: "bold",
+    color: 'white',
+    fontWeight: 'bold',
   },
 
   textView: {
-    position: "absolute",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.3)",
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)',
     borderRadius: 12,
     top: 0,
     left: 0,

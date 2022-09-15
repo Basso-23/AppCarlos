@@ -25,7 +25,7 @@ function Web({ route }) {
           width: '100%',
           height: '100%',
           marginTop: 10,
-          marginBottom: dimensions/22,
+          marginBottom: dimensions / 22,
         }}>
         <WebView
           source={{ uri: route.params.url }}

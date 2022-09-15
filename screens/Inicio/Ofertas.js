@@ -26,15 +26,40 @@ import {
 function Ofertas() {
   const [posts, setPosts] = useState([]);
 
-  
-
-  let prueba = readTEXTfile();
+  const [state, setState] = useState({
+    eventos: 'Eventos',
+  });
 
   useEffect(() => {
-        prueba.then((value) => {
+    let prueba = readTEXTfile();
+    prueba
+      .then((value) => {
+        //state.language = value;
+        if (value == 'chino') {
+          setState({
+            ...state,
+
+            eventos: 'Eventos',
+          });
+        }
+        console.log('leido en nini restaurante: ' + state.banner);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log('leido FUERA en mini restauranter: ' + state.banner);
+  }, []);
+
+  useEffect(() => {
+    prueba
+      .then((value) => {
         language = value;
         axios
-          .get('https://bmacademiaonline.com/payaproyecto3/restaurantes.php?lang=' +language)
+          .get(
+            'https://bmacademiaonline.com/payaproyecto3/restaurantes.php?lang=' +
+              language
+          )
           .then((res) => {
             setPosts(res.data);
           });
@@ -43,6 +68,7 @@ function Ofertas() {
         setPosts('ERROR');
       });
   }, []);
+  let prueba = readTEXTfile();
 
   const navigation = useNavigation();
 
@@ -61,9 +87,7 @@ function Ofertas() {
           decelerationRate="fast">
           {posts.map((section) => (
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('Eventos')
-              }>
+              onPress={() => navigation.navigate(state.eventos)}>
               <Image
                 source={{ uri: section.content[0].image }}
                 style={styles.imagenes}
@@ -100,7 +124,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 12,
     marginBottom: 15,
-    width: dimensions-10,
+    width: dimensions - 10,
   },
 
   imagenes: {
@@ -108,7 +132,7 @@ const styles = StyleSheet.create({
     width: 204,
     marginLeft: 5,
     marginRight: 5,
-    borderRadius:5,
+    borderRadius: 5,
   },
 
   imagenesContainer: {

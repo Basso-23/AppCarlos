@@ -25,16 +25,31 @@ import {
 function Header() {
   const [posts, setPosts] = useState([]);
 
+  const [state, setState] = useState({
+    inicio: 'Inicio',
+  });
+
   useEffect(() => {
-    axios
-      .get('https://tamitut.com/PAYA/carros/shops.php')
-      .then((res) => {
-        setPosts(res.data);
+    let prueba = readTEXTfile();
+    prueba
+      .then((value) => {
+        //state.language = value;
+        if (value == 'chino') {
+          setState({
+            ...state,
+
+            inicio: '家',
+          });
+        }
+        console.log('leido en nini restaurante: ' + state.banner);
       })
       .catch((err) => {
-        setPosts('ERROR');
+        console.log(err);
       });
+
+    console.log('leido FUERA en mini restauranter: ' + state.banner);
   }, []);
+  let prueba = readTEXTfile();
 
   let dimensionsW = Dimensions.get('window').width;
   let dimensionsH = Dimensions.get('window').height;
@@ -58,7 +73,7 @@ function Header() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => navigation.navigate(state.inicio)}>
           <Image
             style={{
               width: 70,
@@ -70,18 +85,16 @@ function Header() {
           />
         </TouchableOpacity>
 
-        
         <TouchableOpacity
-        //Reinicia el app y lo pone en español
+          //Reinicia el app y lo pone en español
           onPress={() => {
             (async () => {
               await saveTEXTfile('latino');
             })();
-            Updates.checkForUpdateAsync();//Chekea por el ultimo update del codigo
-            Updates.fetchUpdateAsync();//Descarga el ultimo update del codigo
-            Updates.reloadAsync();//Reinicia el app y carga el ultimo update guardado
+            Updates.checkForUpdateAsync(); //Chekea por el ultimo update del codigo
+            Updates.fetchUpdateAsync(); //Descarga el ultimo update del codigo
+            Updates.reloadAsync(); //Reinicia el app y carga el ultimo update guardado
           }}>
-        
           <Image
             style={{
               marginLeft: 12,
@@ -95,12 +108,14 @@ function Header() {
         </TouchableOpacity>
 
         <TouchableOpacity
-        //Reinicia el app y lo pone en chino
+          //Reinicia el app y lo pone en chino
           onPress={() => {
-            (async () => {await saveTEXTfile('chino');})();
-            Updates.checkForUpdateAsync();//Chekea por el ultimo update del codigo
-            Updates.fetchUpdateAsync();//Descarga el ultimo update del codigo
-            Updates.reloadAsync();//Reinicia el app y carga el ultimo update guardado
+            (async () => {
+              await saveTEXTfile('chino');
+            })();
+            Updates.checkForUpdateAsync(); //Chekea por el ultimo update del codigo
+            Updates.fetchUpdateAsync(); //Descarga el ultimo update del codigo
+            Updates.reloadAsync(); //Reinicia el app y carga el ultimo update guardado
           }}>
           <Image
             style={{

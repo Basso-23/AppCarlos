@@ -26,16 +26,48 @@ import {
 function Circulos() {
   const [posts, setPosts] = useState([]);
 
+  const [state, setState] = useState({
+    web: 'Web',
+  });
+
   useEffect(() => {
-    axios
-      .get('https://bmacademiaonline.com/payaproyecto3/shops.php')
-      .then((res) => {
-        setPosts(res.data);
+    let prueba = readTEXTfile();
+    prueba
+      .then((value) => {
+        //state.language = value;
+        if (value == 'chino') {
+          setState({
+            ...state,
+            web: '网络',
+          });
+        }
+        console.log('leido en nini restaurante: ' + state.banner);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log('leido FUERA en mini restauranter: ' + state.banner);
+  }, []);
+
+  useEffect(() => {
+    prueba
+      .then((value) => {
+        language = value;
+        axios
+          .get(
+            'https://bmacademiaonline.com/payaproyecto3/shops.php?lang=' +
+              language
+          )
+          .then((res) => {
+            setPosts(res.data);
+          });
       })
       .catch((err) => {
         setPosts('ERROR');
       });
   }, []);
+  let prueba = readTEXTfile();
 
   const navigation = useNavigation();
 
@@ -66,7 +98,7 @@ function Circulos() {
         {posts.map((section) => (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('Web', { url: section.content[0].url })
+              navigation.navigate(state.web, { url: section.content[0].url })
             }>
             <ImageBackground
               source={require('./yellow1Background.png')}
@@ -86,10 +118,10 @@ function Circulos() {
 let dimensions = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
-    width: dimensions-10,
+    width: dimensions - 10,
     height: 84,
     marginTop: 10,
-    marginLeft:5,
+    marginLeft: 5,
   },
 
   background: {

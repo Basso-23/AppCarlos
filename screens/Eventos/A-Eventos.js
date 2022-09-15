@@ -30,7 +30,7 @@ const Eventos = () => {
             height: 120,
             width: dimensionsW,
             borderRadius: 60,
-            marginTop: dimensionsH /1.2,
+            marginTop: dimensionsH / 1.2,
             marginLeft: dimensionsW / 2.5,
             alignItems: 'center',
           }}>
@@ -63,7 +63,7 @@ const Eventos = () => {
             height: 120,
             width: dimensionsW,
             borderRadius: 60,
-            marginTop: dimensionsH /1.2,
+            marginTop: dimensionsH / 1.2,
             marginLeft: dimensionsW / 2.5,
             alignItems: 'center',
           }}>

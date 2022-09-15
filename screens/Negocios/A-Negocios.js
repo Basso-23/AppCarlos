@@ -58,7 +58,6 @@ const Negocios = () => {
             borderRadius: 60,
             marginTop: dimensionsH - 80,
             alignItems: 'center',
-           
           }}>
           <TouchableOpacity
             onPress={() => {

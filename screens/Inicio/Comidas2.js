@@ -26,13 +26,40 @@ import {
 function Comidas2() {
   const [posts, setPosts] = useState([]);
 
+  const [state, setState] = useState({
+    web: 'Web',
+  });
+
+  useEffect(() => {
+    let prueba = readTEXTfile();
+    prueba
+      .then((value) => {
+        //state.language = value;
+        if (value == 'chino') {
+          setState({
+            ...state,
+            web: '网络',
+          });
+        }
+        console.log('leido en nini restaurante: ' + state.banner);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    console.log('leido FUERA en mini restauranter: ' + state.banner);
+  }, []);
   let prueba = readTEXTfile();
 
   useEffect(() => {
-        prueba.then((value) => {
+    prueba
+      .then((value) => {
         language = value;
         axios
-          .get('https://bmacademiaonline.com/payaproyecto3/comidas2.php?lang=' +language)
+          .get(
+            'https://bmacademiaonline.com/payaproyecto3/comidas2.php?lang=' +
+              language
+          )
           .then((res) => {
             setPosts(res.data);
           });
@@ -71,7 +98,7 @@ function Comidas2() {
         {posts.map((section) => (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('Web', { url: section.content[0].url })
+              navigation.navigate(state.web, { url: section.content[0].url })
             }>
             <ImageBackground
               imageStyle={{ borderRadius: 12 }}
@@ -97,7 +124,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginBottom: 5,
     marginTop: 15,
-    width: dimensions-10
+    width: dimensions - 10,
   },
 
   imagenes: {
