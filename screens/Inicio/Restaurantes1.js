@@ -51,7 +51,7 @@ function Restaurantes1() {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.tituloText}>Barrio Chino</Text>
+        <Text style={styles.tituloText}>Barrio Chino23</Text>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Ver+</Text>
         </TouchableOpacity>
