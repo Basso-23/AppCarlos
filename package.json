@@ -24,6 +24,7 @@
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.6",
     "fiction-expo-restart": "*",
+    "firebase": "^9.10.0",
     "lottie-ios": "3.2.3",
     "lottie-react-native": "5.0.1",
     "react": "17.0.1",

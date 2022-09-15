@@ -39,7 +39,7 @@ const Tab = createBottomTabNavigator();
 
 let dimensionsH = Dimensions.get('window').height;
 
-function MyTabs() {
+function MyTabs1() {
   const [state, setState] = useState({
     url: null,
     inicio: 'Inicio',
@@ -233,7 +233,7 @@ export default function Navigation() {
  
   return (
     <NavigationContainer>
-      <MyTabs2/>
+      <MyTabs1/>
     </NavigationContainer>
   );
 }
