@@ -233,7 +233,7 @@ export default function Navigation() {
  
   return (
     <NavigationContainer>
-      <MyTabs/>
+      <MyTabs2/>
     </NavigationContainer>
   );
 }
