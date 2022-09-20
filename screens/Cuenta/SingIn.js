@@ -10,6 +10,7 @@ import {
   TextInput,
 } from 'react-native';
 import { Dimensions } from 'react-native';
+import { firebase } from "../../config"
 
 let dimensionsW = Dimensions.get('window').width;
 let dimensionsH = Dimensions.get('window').height;
@@ -17,6 +18,14 @@ let dimensionsH = Dimensions.get('window').height;
 const SingIn = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  loginUser = async (email, password)=>{
+    try{
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+    }catch (error){
+        alert("Correo electronico o constraseña incorrecto")
+    }
+}
 
   return (
     <View style={styles.container1}>
@@ -44,7 +53,7 @@ const SingIn = () => {
           <View style={styles.inputContainer}>
             <TextInput
               labelValue={email}
-              onChangeText={(userEmail) => setEmail(userEmail)}
+              onChangeText={(email) => setEmail(email)}
               placeholder="Nombre de usuario"
               placeholderTextColor="#61616d"
               keyboardType="email-address"
@@ -57,7 +66,7 @@ const SingIn = () => {
           <View style={styles.inputContainer}>
             <TextInput
               labelValue={password}
-              onChangeText={(userPassword) => setPassword(userPassword)}
+              onChangeText={(password) => setPassword(password)}
               placeholder="Contraseña"
               placeholderTextColor="#61616d"
               style={styles.input}
@@ -66,6 +75,7 @@ const SingIn = () => {
           </View>                   
           <View style={styles.singInButton}>
             <TouchableOpacity
+            onPress={()=> loginUser(email, password)}
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   Text,
   View,
@@ -21,6 +22,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Header from './screens/Inicio/HeaderWhite';
 import { Dimensions } from 'react-native';
+import { firebase } from "./config"
 
 //screens
 import Inicio from './screens/Inicio/A-Inicio';
@@ -36,10 +38,23 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
-
+const Stack = createStackNavigator();
 let dimensionsH = Dimensions.get('window').height;
 
-function MyTabs1() {
+
+function Nav() {
+  const [initializing, setInitializing] = useState(true)
+  const [user, setUser] = useState()
+
+  function onAuthStateChanged(user) {
+    setUser(user)
+    if (initializing) setInitializing(false)
+  }
+  useEffect(() => {
+    const suscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged)
+    return suscriber
+  }, []);
+
   const [state, setState] = useState({
     url: null,
     inicio: 'Inicio',
@@ -62,6 +77,9 @@ function MyTabs1() {
     });
   }, []);
 
+  if (initializing) return null
+
+if (!user){
   return (
     <Tab.Navigator
       screenOptions={{
@@ -133,29 +151,6 @@ function MyTabs1() {
     </Tab.Navigator>
   );
 }
-
-function MyTabs2() {
-  const [state, setState] = useState({
-    url: null,
-    inicio: 'Inicio',
-    negocios: 'Negocios',
-    web: 'Web',
-  });
-
-  useEffect(() => {
-    let prueba = readTEXTfile();
-    prueba.then((value) => {
-      state.language = value;
-      if (value == 'chino') {
-        setState({
-          ...state,
-          inicio: '家',
-          negocios: '餐馆',
-          web: '网络',
-        });
-      }
-    });
-  }, []);
 
   return (
     <Tab.Navigator
@@ -229,11 +224,12 @@ function MyTabs2() {
   );
 }
 
-export default function Navigation() {
+
+export default () => {
  
   return (
     <NavigationContainer>
-      <MyTabs1/>
+      <Nav />
     </NavigationContainer>
   );
 }

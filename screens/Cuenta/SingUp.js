@@ -10,6 +10,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Dimensions } from 'react-native';
+import { firebase } from "../../config"
 
 let dimensionsW = Dimensions.get('window').width;
 let dimensionsH = Dimensions.get('window').height;
@@ -18,6 +19,21 @@ const SingUp = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [name, setName] = useState();
+
+  registerUser = async (email, password, name)=>{
+    await firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then (() =>{
+        firebase.firestore().collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .set({
+          name, 
+          email,
+        })
+      })
+      .catch ((error) => {
+        alert(error.message)
+      })
+}
 
   return (
     <View style={styles.container1}>
@@ -46,7 +62,7 @@ const SingUp = () => {
           <View style={styles.inputContainer}>
             <TextInput
               labelValue={name}
-              onChangeText={(userName) => setEmail(userName)}
+              onChangeText={(name) => setName(name)}
               placeholder="Nombre de usuario"
               placeholderTextColor="#61616d"
               autoCapitalize="none"
@@ -58,7 +74,7 @@ const SingUp = () => {
           <View style={styles.inputContainer}>
             <TextInput
               labelValue={email}
-              onChangeText={(userEmail) => setEmail(userEmail)}
+              onChangeText={(email) => setEmail(email)}
               placeholder="Email"
               placeholderTextColor="#61616d"
               keyboardType="email-address"
@@ -71,7 +87,7 @@ const SingUp = () => {
           <View style={styles.inputContainer}>
             <TextInput
               labelValue={password}
-              onChangeText={(userPassword) => setPassword(userPassword)}
+              onChangeText={(password) => setPassword(password)}
               placeholder="Contraseña"
               placeholderTextColor="#61616d"
               style={styles.input}
@@ -108,6 +124,7 @@ const SingUp = () => {
           </View>
           <View style={styles.singInButton}>
             <TouchableOpacity
+            onPress={()=> registerUser(email, password, name)}
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
