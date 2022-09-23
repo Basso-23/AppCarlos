@@ -36,6 +36,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -98,7 +99,7 @@ if (!user){
         component={Inicio}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="home" color={color} size={22} />
+            <Feather name="home" color={color} size={22} />
           ),
           headerBackground: () => <Header />,
         }}
@@ -109,7 +110,7 @@ if (!user){
         component={Negocios}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="list" size={17} color={color} />
+            <Feather name="list" size={17} color={color} />
           ),
           headerShown: false,
         }}
@@ -121,7 +122,7 @@ if (!user){
         component={Web}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="bookmark" size={20} color={color} />
+            <Feather name="bookmark" size={20} color={color} />
           ),
           headerBackground: () => <Header />,
         }}
@@ -132,7 +133,7 @@ if (!user){
         component={Eventos}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="ticket" size={20} color={color} />
+            < FontAwesome name="ticket" size={20} color={color} />
           ),
           headerShown: false,
         }}
@@ -143,7 +144,7 @@ if (!user){
         component={Cuenta}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="user" size={20} color={color} />
+            <Feather name="user" size={20} color={color} />
           ),
           headerBackground: () => <Header />,
         }}
@@ -217,7 +218,7 @@ if (!user){
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" size={20} color={color} />
           ),
-          headerBackground: () => <Header />,
+          headerShown:false
         }}
       />
     </Tab.Navigator>
