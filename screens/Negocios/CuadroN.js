@@ -87,7 +87,20 @@ function CuadroN() {
                   width: '100%',
                   marginBottom: 15,
                   borderRadius: 10,
-                }}>
+                }}
+                onPress={() =>
+                  navigation.navigate("Restaurante", {
+                    name: section.content[0].name,
+                    image: section.content[0].image,
+                    mini: section.content[0].mini,
+                    description: section.content[0].description,
+                    id: section.content[0].id,
+                    coordinates: section.content[0].coordinates,
+                    telefono: section.content[0].telefono,
+                    share_link: section.content[0].share_link,
+                    ubicacion: section.content[0].ubicacion,
+                  })
+                }>
                 <ImageBackground
                   source={{ uri: section.content[0].image }}
                   style={styles.imagenes}>
@@ -102,7 +115,10 @@ function CuadroN() {
                           alignSelf: 'baseline',
                           height: 20,
                         }}>
-                        <Text style={styles.imageText}> {state.banner} </Text>
+                        <Text style={styles.imageText}> 
+                          {' '}
+                          {section.content[0].estado}{' '}
+                        </Text>
                       </View>
 
                       <View style={styles.childView}>
@@ -191,7 +207,21 @@ function CuadroN() {
                   width: '100%',
                   marginBottom: 15,
                   borderRadius: 10,
-                }}>
+                }}
+                
+                onPress={() =>
+                  navigation.navigate("Restaurante", {
+                    name: section.content[0].name,
+                    image: section.content[0].image,
+                    mini: section.content[0].mini,
+                    description: section.content[0].description,
+                    id: section.content[0].id,
+                    coordinates: section.content[0].coordinates,
+                    telefono: section.content[0].telefono,
+                    share_link: section.content[0].share_link,
+                    ubicacion: section.content[0].ubicacion,
+                  })
+                }>
                 <ImageBackground
                   source={{ uri: section.content[0].image }}
                   style={styles.imagenes}>
@@ -206,7 +236,10 @@ function CuadroN() {
                           alignSelf: 'baseline',
                           height: 20,
                         }}>
-                        <Text style={styles.imageText}> {state.banner} </Text>
+                        <Text style={styles.imageText}> 
+                          {' '}
+                          {section.content[0].estado}{' '}
+                        </Text>
                       </View>
 
                       <View style={styles.childView}>

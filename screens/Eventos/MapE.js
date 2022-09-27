@@ -12,6 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 import {
   addMultipleGifs,
@@ -28,7 +29,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 const Map = () => {
   const [posts, setPosts] = useState([]);
-
+  const navigation = useNavigation();
   let prueba = readTEXTfile();
 
   useEffect(() => {
@@ -36,9 +37,8 @@ const Map = () => {
       .then((value) => {
         language = value;
         axios
-          .get(
-            'https://bmacademiaonline.com/payaproyecto3/restaurantes.php?lang=' +
-              language
+          .get("https://bmacademiaonline.com/payaproyecto3/eventos.php"
+            
           )
           .then((res) => {
             setPosts(res.data);
@@ -66,8 +66,7 @@ const Map = () => {
   useEffect(() => {
     axios
       .get(
-        'https://bmacademiaonline.com/payaproyecto3/restaurantes.php?lang=' +
-          language
+        'https://bmacademiaonline.com/payaproyecto3/eventos.php' 
       )
       .then((response) => {
         setStat({
@@ -199,7 +198,22 @@ const Map = () => {
         //Animacion con el mapa
       >
         {posts.map((section) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card}
+          onPress={() =>
+            navigation.navigate("Promo", {
+              image: section.content[0].image,
+              name: section.content[0].name,
+              fecha_fin: section.content[0].fecha_fin,
+              fecha_inicio: section.content[0].fecha_inicio,
+              ubicacion: section.content[0].ubicacion,
+              latitude: section.content[0].latitude,
+              longitude: section.content[0].longitude,
+              coordinates: section.content[0].coordinates,
+              description: section.content[0].description,
+              url: section.content[0].url,
+            })
+          }
+        >
             <ImageBackground
               source={{ uri: section.content[0].image }}
               style={styles.cardImage}
@@ -240,10 +254,11 @@ const Map = () => {
                 {section.content[0].name}
               </Text>
               <Text numberOfLines={1} style={styles.cardDescription}>
-                1 diciembre, 2021 - Mie 12:00
+                {section.content[0].fecha_inicio} al{" "}
+                {section.content[0].fecha_fin}
               </Text>
               <Text numberOfLines={1} style={styles.cardDescription}>
-                Los Años Locos, San Francisco, Panama, Panama, Panama....
+                {section.content[0].description}
               </Text>
               <Text numberOfLines={1} style={styles.cardDescription}>
                 0 personas interesadas

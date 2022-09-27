@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Ficha from "../../screens/Negocios/Ficha";
-import Negocios from "../../screens/Negocios/A-Negocios";
-
+import Promo from "./Promo";
+import Eventos from "./A-Eventos";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,14 +12,14 @@ export default function NegociosStack() {
       }}
     >
       <Stack.Screen
-        name={"Negocio"}
-        component={Negocios}
-        options={{ title: "Negocios" }}
+        name={"Eventos"}
+        component={Eventos}
+        options={{ title: "Eventos" }}
       />
       <Stack.Screen
-        name={"Restaurante"}
-        component={Ficha}
-        options={{ title: "Restaurante" }}
+        name={"Promo"}
+        component={Promo}
+        options={{ title: "Promo" }}
       />
     </Stack.Navigator>
   );

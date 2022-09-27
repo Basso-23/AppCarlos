@@ -35,8 +35,7 @@ function CuadroE() {
         language = value;
         axios
           .get(
-            'https://bmacademiaonline.com/payaproyecto3/restaurantes.php?lang=' +
-              language
+            'https://bmacademiaonline.com/payaproyecto3/eventos.php'
           )
           .then((res) => {
             setPosts(res.data);
@@ -63,7 +62,21 @@ function CuadroE() {
                     width: '100%',
                     marginBottom: 90,
                     borderRadius: 10,
-                  }}>
+                  }}
+                  onPress={() =>
+                    navigation.navigate("Promo", {
+                      image: section.content[0].image,
+                      name: section.content[0].name,
+                      fecha_fin: section.content[0].fecha_fin,
+                      fecha_inicio: section.content[0].fecha_inicio,
+                      ubicacion: section.content[0].ubicacion,
+                      latitude: section.content[0].latitude,
+                      longitude: section.content[0].longitude,
+                      coordinates: section.content[0].coordinates,
+                      description: section.content[0].description,
+                      url: section.content[0].url,
+                    })
+                  }>
                   <View style={styles.leftImages}>
                     <ImageBackground
                       source={{ uri: section.content[0].image }}
@@ -104,11 +117,11 @@ function CuadroE() {
                         {section.content[0].name}
                       </Text>
                       <Text numberOfLines={1} style={styles.cardDescription}>
-                        1 diciembre, 2021 - Mie 12:00
+                        {section.content[0].fecha_inicio} al{" "}
+                        {section.content[0].fecha_fin}
                       </Text>
                       <Text numberOfLines={1} style={styles.cardDescription}>
-                        Los Años Locos, San Francisco, Panama, Panama,
-                        Panama....
+                        {section.content[0].ubicacion}
                       </Text>
                       <Text numberOfLines={1} style={styles.cardDescription}>
                         0 personas interesadas
@@ -129,7 +142,23 @@ function CuadroE() {
                     width: '100%',
                     marginBottom: 90,
                     borderRadius: 10,
-                  }}>
+                  }}
+                  onPress={() =>
+                    navigation.navigate("Promo", {
+                      image: section.content[0].image,
+                      name: section.content[0].name,
+                      fecha_fin: section.content[0].fecha_fin,
+                      fecha_inicio: section.content[0].fecha_inicio,
+                      ubicacion: section.content[0].ubicacion,
+                      latitude: section.content[0].latitude,
+                      longitude: section.content[0].longitude,
+                      coordinates: section.content[0].coordinates,
+                      description: section.content[0].description,
+                      url: section.content[0].url,
+                    })
+                  }
+
+                  >
                   <View style={styles.rightImages}>
                     <ImageBackground
                       source={{ uri: section.content[0].image }}
@@ -169,11 +198,11 @@ function CuadroE() {
                         {section.content[0].name}
                       </Text>
                       <Text numberOfLines={1} style={styles.cardDescription}>
-                        1 diciembre, 2021 - Mie 12:00
+                        {section.content[0].fecha_inicio} al{" "}
+                        {section.content[0].fecha_fin}
                       </Text>
                       <Text numberOfLines={1} style={styles.cardDescription}>
-                        Los Años Locos, San Francisco, Panama, Panama,
-                        Panama....
+                        {section.content[0].ubicacion}
                       </Text>
                       <Text numberOfLines={1} style={styles.cardDescription}>
                         0 personas interesadas

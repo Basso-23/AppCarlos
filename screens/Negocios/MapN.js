@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import axios from 'axios';
+import { useNavigation } from "@react-navigation/native";
 import {
   addMultipleGifs,
   deleteAllGifs,
@@ -28,6 +29,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 const Map = () => {
   const [posts, setPosts] = useState([]);
+  const navigation = useNavigation();
 
   const [state, setState] = useState({
     banner: 'Abierto',
@@ -223,7 +225,23 @@ const Map = () => {
         //Animacion con el mapa
       >
         {posts.map((section) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity 
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate("Restaurante", {
+              name: section.content[0].name,
+              image: section.content[0].image,
+              mini: section.content[0].mini,
+              description: section.content[0].description,
+              id: section.content[0].id,
+              coordinates: section.content[0].coordinates,
+              telefono: section.content[0].telefono,
+              share_link: section.content[0].share_link,
+              ubicacion: section.content[0].ubicacion,
+            })
+          }
+          
+          >
             <ImageBackground
               source={{ uri: section.content[0].image }}
               style={styles.cardImage}

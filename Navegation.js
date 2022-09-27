@@ -23,6 +23,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Header from './screens/Inicio/HeaderWhite';
 import { Dimensions } from 'react-native';
 import { firebase } from "./config"
+import { useNavigation } from "@react-navigation/native";
 
 //screens
 import Inicio from './screens/Inicio/A-Inicio';
@@ -31,6 +32,10 @@ import Web from './screens/Web/A-Web';
 import Cuenta from './screens/Cuenta/A-Cuenta';
 import Eventos from './screens/Eventos/A-Eventos';
 import Cuenta2 from './screens/Cuenta/A-Cuenta2';
+
+//Stacks
+import EventosStacks from "./screens/Eventos/EventosStack";
+import NegociosStack from "./screens/Negocios/NegociosStack";
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -56,12 +61,15 @@ function Nav() {
     return suscriber
   }, []);
 
-  const [state, setState] = useState({
+  let [state, setState] = useState({
     url: null,
     inicio: 'Inicio',
     negocios: 'Negocios',
     web: 'Web',
   });
+
+  const navigation = useNavigation();
+ 
 
   useEffect(() => {
     let prueba = readTEXTfile();
@@ -77,6 +85,10 @@ function Nav() {
       }
     });
   }, []);
+
+  const goToMap = () => {
+    navigation.navigate(state.negocios, { screen: "Negocio" });
+  };
 
   if (initializing) return null
 
@@ -107,12 +119,15 @@ if (!user){
 
       <Tab.Screen
         name={state.negocios}
-        component={Negocios}
+        component={NegociosStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Feather name="list" size={17} color={color} />
           ),
           headerShown: false,
+          tabBarButton: (props) => (
+            <TouchableOpacity {...props} onPress={goToMap} />
+          ),
         }}
       />
 
@@ -130,7 +145,7 @@ if (!user){
 
       <Tab.Screen
         name="Eventos"
-        component={Eventos}
+        component={EventosStacks}
         options={{
           tabBarIcon: ({ color, size }) => (
             < FontAwesome name="ticket" size={20} color={color} />
@@ -171,7 +186,7 @@ if (!user){
         component={Inicio}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="home" color={color} size={22} />
+            <Feather name="home" color={color} size={22} />
           ),
           headerBackground: () => <Header />,
         }}
@@ -179,12 +194,15 @@ if (!user){
 
       <Tab.Screen
         name={state.negocios}
-        component={Negocios}
+        component={NegociosStack}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="list" size={17} color={color} />
+            <Feather name="list" size={17} color={color} />
           ),
           headerShown: false,
+          tabBarButton: (props) => (
+            <TouchableOpacity {...props} onPress={goToMap} />
+          ),
         }}
       />
 
@@ -194,7 +212,7 @@ if (!user){
         component={Web}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="bookmark" size={20} color={color} />
+            <Feather name="bookmark" size={20} color={color} />
           ),
           headerBackground: () => <Header />,
         }}
@@ -202,10 +220,10 @@ if (!user){
 
       <Tab.Screen
         name="Eventos"
-        component={Eventos}
+        component={EventosStacks}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="ticket" size={20} color={color} />
+            < FontAwesome name="ticket" size={20} color={color} />
           ),
           headerShown: false,
         }}
